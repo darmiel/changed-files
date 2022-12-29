@@ -34,6 +34,7 @@ async function run(): Promise<void> {
       // add default status
       status.push('modified', 'added', 'removed')
     }
+    core.debug(`Status: ${status}`)
 
     const kit = github.getOctokit(core.getInput('token', {required: true}))
     const files = []
@@ -47,10 +48,11 @@ async function run(): Promise<void> {
         per_page: PER_PAGE,
         page
       })
+      files.push(...result.data)
+      core.debug(`Page: ${page} - Files: ${result.data.length}`)
       if (result.data.length < PER_PAGE) {
         break
       }
-      files.push(...result.data)
       page += 1
     } while (page <= 30) // 3_000 files maximum reported by GitHub
 

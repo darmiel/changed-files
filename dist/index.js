@@ -72,16 +72,18 @@ function run() {
                 // add default status
                 status.push('modified', 'added', 'removed');
             }
+            core.debug(`Status: ${status}`);
             const kit = github.getOctokit(core.getInput('token', { required: true }));
             const files = [];
             // get files changed in pull request
             let page = 1;
             do {
                 const result = yield kit.rest.pulls.listFiles(Object.assign(Object.assign({}, github.context.repo), { pull_number: prNumber, per_page: PER_PAGE, page }));
+                files.push(...result.data);
+                core.debug(`Page: ${page} - Files: ${result.data.length}`);
                 if (result.data.length < PER_PAGE) {
                     break;
                 }
-                files.push(...result.data);
                 page += 1;
             } while (page <= 30); // 3_000 files maximum reported by GitHub
             core.info(`Total files changed in PR: ${files.length}`);
