@@ -1,6 +1,11 @@
 name: 'changed-pr-files'
 description: 'get changed files for a pull request'
 author: 'darmiel <hi@d2a.io>'
+
+branding:
+  icon: align-center
+  color: yellow
+
 inputs:
   token:
     required: true
@@ -14,6 +19,7 @@ inputs:
     required: true
     description: which states to track
     default: 'modified,added,removed'
+
 runs:
   using: 'node16'
   main: 'dist/index.js'
