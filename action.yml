@@ -1,4 +1,4 @@
-name: 'changed-files'
+name: 'changed-pr-files'
 description: 'get changed files for a pull request'
 author: 'darmiel <hi@d2a.io>'
 inputs:
